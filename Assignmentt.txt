@@ -1,0 +1,53 @@
+'''
+Name: Iwinosa Agbonlahor
+Class: EEGR 565 Machine Learning Applications
+Assignment 1:
+This is a Program that reads the content of a csv file and plot a histogram of the words,
+indicating which word is related to pandemic and the frequency of its occurence.
+
+Link to shared folder: https://drive.google.com/drive/folders/109C0OOSGMVeoHsjont0MkVvMQdvrNNCK?usp=sharing
+'''
+
+# Here we import the necessary libraries, objects and function for the application
+import pandas as pd
+import numpy as np
+import csv
+from nltk.corpus import names
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import CountVectorizer
+from nltk.stem import WordNetLemmatizer
+
+
+from google.colab import files
+uploaded = files.upload()
+
+# display first five rows of the file
+df = pd.read_csv('cnn_data_4_5.csv')
+print(df.to_string())
+
+
+#Read the Body Column of the 'cnn_data_4_5.csv' file
+content = ['body']
+cnn_data = pd.read_csv("cnn_data_4_5.csv", skipinitialspace=True, usecols=content)
+# print (cnn_data.body)
+
+
+# This Vectorizes the words in the body section and sorts it in order of freq
+cv=CountVectorizer(stop_words="english", max_features=500)
+bag_of_words=cv.fit_transform(cnn_data.body)
+
+
+# Plot a histogram of the most frequent words in the dataset
+import matplotlib.pyplot as plt
+keywords=[]
+freqs=[]
+for word, count in words_freq:
+    keywords.append(word)
+    freqs.append(count)
+plt.bar(np.arange(10), freqs[:10], align='center')
+plt.xticks(np.arange(10), keywords[:10])
+plt.ylabel('Frequency')
+plt.title('Top 10 Keywords')
+plt.show()
+
+selected_tokens = list(filter(lambda freq: c[freq] > 1000, token_list))
